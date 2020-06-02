@@ -3,8 +3,14 @@ package com.example.task1.api;
 import com.example.task1.model.Customer;
 import com.example.task1.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,12 +23,12 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @Autowired
-    public CustomerController(@Qualifier("CustomerService") CustomerService customerService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
     @PostMapping
-    public int createCustomer(@RequestBody Customer customer) {
+    public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.createCustomer(customer);
     }
 
@@ -42,7 +48,7 @@ public class CustomerController {
     }
 
     @PutMapping(path = "{customerId}")
-    public int updateCustomer(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
+    public Customer updateCustomer(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
         return customerService.updateCustomer(customerId, customer);
     }
 }

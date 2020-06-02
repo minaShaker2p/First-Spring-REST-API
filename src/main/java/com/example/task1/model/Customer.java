@@ -1,13 +1,19 @@
 package com.example.task1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Getter
 public class Customer {
-    private UUID customerId;
+
+    @Setter
     private String customerName;
-    private UUID invoiceId;
+
+    private final UUID customerId;
+    private final UUID invoiceId;
 
     public UUID getCustomerId() {
         return customerId;

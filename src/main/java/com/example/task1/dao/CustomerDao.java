@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface CustomerDao {
 
-    int createCustomer(Customer customer);
+    Customer createCustomer(Customer customer);
 
     List<Customer> getCustomers();
 
@@ -16,6 +16,6 @@ public interface CustomerDao {
 
     int deleteCustomer(UUID customerId);
 
-    int updateCustomer(UUID customerId, Customer customer);
+    Customer updateCustomer(UUID customerId, Customer customer);
 
 }

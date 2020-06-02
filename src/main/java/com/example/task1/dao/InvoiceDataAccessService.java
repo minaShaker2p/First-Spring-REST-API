@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,10 +21,12 @@ public class InvoiceDataAccessService implements InvoiceDao {
     }
 
     @Override
-    public int createInvoice(Invoice invoice) {
+    public Invoice createInvoice(Invoice invoice) {
         String sql = "INSERT INTO invoice (invoiceId , total) VALUES (? ,? )";
-        Object[] params = new Object[]{UUID.randomUUID(), invoice.getTotal()};
-        return jdbcTemplate.update(sql, params);
+        UUID id = UUID.randomUUID();
+        Object[] params = {id, invoice.getTotal()};
+        int create = jdbcTemplate.update(sql, params);
+        return create == 1 ? new Invoice(id, invoice.getTotal()) : null;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class InvoiceDataAccessService implements InvoiceDao {
         String sql = "SELECT * FROM  invoice";
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString("invoiceId"));
-            Double total = resultSet.getDouble("total");
+            BigDecimal total = resultSet.getBigDecimal("total");
             return new Invoice(id, total);
         });
     }
@@ -41,7 +44,7 @@ public class InvoiceDataAccessService implements InvoiceDao {
         String sql = "SELECT * FROM  invoice WHERE invoiceId = ?";
         Invoice invoice = jdbcTemplate.queryForObject(sql, new Object[]{invoiceId}, (resultSet, i) -> {
             UUID id = UUID.fromString(resultSet.getString("invoiceId"));
-            Double total = resultSet.getDouble("total");
+            BigDecimal total = resultSet.getBigDecimal("total");
             return new Invoice(id, total);
         });
         return Optional.ofNullable(invoice);
@@ -55,9 +58,11 @@ public class InvoiceDataAccessService implements InvoiceDao {
     }
 
     @Override
-    public int updateInvoice(UUID invoiceId, Invoice invoice) {
+    public Invoice updateInvoice(UUID invoiceId, Invoice invoice) {
         String sql = "UPDATE invoice SET total = ?  WHERE invoiceId = ?";
-        Object[] params = new Object[]{invoice.getTotal(), invoiceId};
-        return jdbcTemplate.update(sql, params);
+        Object[] params = {invoice.getTotal(), invoiceId};
+        int update = jdbcTemplate.update(sql, params);
+
+        return update == 1 ? new Invoice(invoiceId, invoice.getTotal()) : null;
     }
 }

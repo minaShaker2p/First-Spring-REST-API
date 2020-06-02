@@ -3,19 +3,18 @@ package com.example.task1.service;
 import com.example.task1.dao.InvoiceDao;
 import com.example.task1.model.Invoice;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service("InvoiceService")
+@Service
 public class InvoiceService {
     private final InvoiceDao invoiceDao;
 
     @Autowired
-    public InvoiceService(@Qualifier("InvoiceDao") InvoiceDao invoiceDao) {
+    public InvoiceService(InvoiceDao invoiceDao) {
         this.invoiceDao = invoiceDao;
     }
 
@@ -27,7 +26,7 @@ public class InvoiceService {
         return invoiceDao.getInvoice(invoiceId);
     }
 
-    public int createInvoice(Invoice invoice) {
+    public Invoice createInvoice(Invoice invoice) {
         return invoiceDao.createInvoice(invoice);
     }
 
@@ -35,7 +34,7 @@ public class InvoiceService {
         return invoiceDao.deleteInvoice(invoiceId);
     }
 
-    public int updateInvoice(UUID invoiceId, Invoice invoice) {
+    public Invoice updateInvoice(UUID invoiceId, Invoice invoice) {
         return invoiceDao.updateInvoice(invoiceId, invoice);
     }
 

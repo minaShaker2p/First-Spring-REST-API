@@ -1,6 +1,5 @@
 package com.example.task1.dao;
 
-import com.example.task1.model.Customer;
 import com.example.task1.model.Invoice;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.UUID;
 
 public interface InvoiceDao {
 
-    int createInvoice(Invoice invoice);
+    Invoice createInvoice(Invoice invoice);
 
     List<Invoice> getInvoices();
 
@@ -17,6 +16,6 @@ public interface InvoiceDao {
 
     int deleteInvoice(UUID invoiceId);
 
-    int updateInvoice(UUID invoiceId, Invoice invoice);
+    Invoice updateInvoice(UUID invoiceId, Invoice invoice);
 
 }

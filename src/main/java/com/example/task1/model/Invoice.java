@@ -1,23 +1,21 @@
 package com.example.task1.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 
+
+@Getter
 public class Invoice {
-    private UUID invoiceId;
-    private Double total;
+    private final UUID invoiceId;
+    private final BigDecimal total;
 
-    public Invoice(UUID invoiceId, Double total) {
+    public Invoice(@JsonProperty("invoiceId") UUID invoiceId,
+                   @JsonProperty("total") BigDecimal total) {
         this.invoiceId = invoiceId;
-
         this.total = total;
-    }
-
-    public UUID getInvoiceId() {
-        return invoiceId;
-    }
-
-    public Double getTotal() {
-        return total;
     }
 }
 

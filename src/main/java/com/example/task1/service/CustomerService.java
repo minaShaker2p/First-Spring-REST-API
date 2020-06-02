@@ -3,25 +3,24 @@ package com.example.task1.service;
 import com.example.task1.dao.CustomerDao;
 import com.example.task1.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service("CustomerService")
+@Service
 public class CustomerService {
 
     private final CustomerDao customerDao;
 
     @Autowired
-    public CustomerService(@Qualifier("CustomerDao") CustomerDao customerDao) {
+    public CustomerService( CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
 
 
-    public int createCustomer(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         return customerDao.createCustomer(customer);
     }
 
@@ -37,7 +36,7 @@ public class CustomerService {
         return customerDao.deleteCustomer(customerId);
     }
 
-    public int updateCustomer(UUID customerId, Customer customer) {
+    public Customer updateCustomer(UUID customerId, Customer customer) {
         return customerDao.updateCustomer(customerId, customer);
     }
 }
